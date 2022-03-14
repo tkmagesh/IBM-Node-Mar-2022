@@ -76,3 +76,21 @@ CommonJS (module system)
     - everything defined in a file (variable, function, object, class etc) is considered as private by DEFAULT
     - to make a variable public, assign it to "module.exports"
     - the default value of "module.exports" is an empty object ( {} )
+
+
+Assignment-1:
+    accumulator.js
+        create a program 'accumulator.js'
+            create a accumulator object with the following methods
+                add(x)
+                subtract(x)
+                multiply(x)
+                divide(x)
+                getResult()
+    accumulator-client.js
+        accumulator.add(100)
+        accumulator.subtract(50)
+        accumulator.multiply(10)
+        accumulator.divide(4)
+        console.log(accumulator.getResult()) => 125
+            
