@@ -1,0 +1,64 @@
+Magesh Kuppan
+
+Schdule:
+    Commence    : 9:30 AM
+    Tea Break   : 11:00 AM (20 mins)
+    Lunch Break : 1:00 PM (1 Hr)
+    Tea Break   : 3:30 PM (20 mins)
+    End         : 5:30 PM
+
+Methodology:
+    No powerpoints
+    100% hands on
+    Alteast 50% of the participants should have completed the assignment
+
+About You:
+    Name
+    Experience
+    Primary Skillset
+    Experience in Node.js (if any)
+
+Java (1995)
+Pythan(1995)
+C# (1998)
+Ruby (1998)
+C++ (~1980)
+C
+
+Node.js (2012)
+    light weight
+    Single Threaded
+
+
+JavaScript
+    Data Types
+        number, string, boolean
+        object, undefined, function
+    
+    Constructs
+        var, if else, while, for, switch, try catch finally, break, continue, function,
+
+    APIs
+        Math, Array, RegEx, timer (setTimeout, clearTimeout, setInterval, clearInterval), Error 
+
+Single Threaded Event Loop
+
+Reception
+    1. Visitor
+        a. visitor ledger
+        b. gadget ledger
+        c. escorted
+    2. Courier
+        a. courier ledger
+    3. Associates
+        a. Temp badge ledger
+
+Single Threaded
+    Blocking
+
+Multi Threaded
+    Blocking
+
+Single Threaded
+    Event Loop
+    Non Blocking
