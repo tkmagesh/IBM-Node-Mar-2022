@@ -62,3 +62,17 @@ Multi Threaded
 Single Threaded
     Event Loop
     Non Blocking
+
+create a program 'calculator.js'
+    create a calculator object with the following methods
+        add(x,y)
+        subtract(x,y)
+        multiply(x,y)
+        divide(x,y)
+    Invoke the above methods for x = 100 & y = 20 and print the results
+
+
+CommonJS (module system)
+    - everything defined in a file (variable, function, object, class etc) is considered as private by DEFAULT
+    - to make a variable public, assign it to "module.exports"
+    - the default value of "module.exports" is an empty object ( {} )
