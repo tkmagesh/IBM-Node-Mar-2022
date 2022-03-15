@@ -104,3 +104,4 @@ Compilers
     Script# (C# -> JavaScript)
 
 ES6 (ECMAScript 6 / ES2015 / ESNext )
+    1. let

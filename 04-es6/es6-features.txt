@@ -28,8 +28,12 @@
     var {id:x, salary:y} = emp
     
 7. rest operator (object)
+    var emp = { id : 100, name : 'Magesh', salary : 10000 }
+    var {id, ...z} = emp
 
 8. spread operator (object)
+    var emp = { id : 100, name : 'Magesh', salary : 10000 }
+    var newEmp = { ...emp, city : 'Bengaluru' }
 
 
 
