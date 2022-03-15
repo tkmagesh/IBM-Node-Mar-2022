@@ -35,5 +35,77 @@
     var emp = { id : 100, name : 'Magesh', salary : 10000 }
     var newEmp = { ...emp, city : 'Bengaluru' }
 
+9. default arguments
+    function add(x=10, y=20){
+        return x + y
+    }
+    add() //=> 30
+    add(100) //=> 120
+    add(undefined, 200) //=> 210
+    add(100,200) //=> 300
 
+10. arrow functions
+    /*
+    //function statement
+    function add(x,y){
+        return x + y;
+    }
 
+    //function expression
+    var add = function(x,y){
+        return x + y;
+    }
+
+    var add = (x,y) => {
+        return x + y;
+    }
+
+    */
+    var add = (x,y) => x + y;
+
+    Study the following array methods
+        - forEach()
+        - map()
+        - filter()
+        - reduce()  
+
+11. template literals
+        var x = 10, y = 20
+        var s1 = 'sum of ' + x + ' and ' + y + ' is ' + (x + y)
+        var s2 = `sum of ${x} and ${y} is ${x+y}`
+
+12. iterator (for..of)
+    var nos = [3,1,4,2,5]
+    for(var i of nos){
+        console.log(i)
+    }
+
+13. class
+    class Employee{
+        id = 0;
+        name = '';
+        salary = 0;
+
+        constructor(id, name, salary){
+            this.id = id;
+            this.name = name;
+            this.salary = salary;
+        }
+
+        display(){
+            console.log(`id = ${this.id}, name = ${this.name}, salary = ${this.salary}`)
+        }
+    }
+
+    class FulltimeEmployee extends Employee{
+        benefits = '';
+        constructor(id, name, salary, benefits){
+            super(id, name, salary);
+            this.benefits = benefits;
+        }
+
+        display(){
+            super.display()
+            console.log(`benefits = ${this.benefits}`)
+        }
+    }
