@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+console.time()
 fs.readFile('sample.txt', { encoding : 'utf8'}, function(err, fileContents){
     if (err) {
         console.log('something went wrong!')
@@ -7,5 +8,6 @@ fs.readFile('sample.txt', { encoding : 'utf8'}, function(err, fileContents){
         return
     }
     console.log(fileContents)
+    console.timeEnd()
     console.log('END OF FILE')
 })
