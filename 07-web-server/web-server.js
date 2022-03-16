@@ -15,6 +15,7 @@ const server = http.createServer((req /* IncomingMessage */, res /* ServerRespon
    
 
     //async (using callbacks)
+    /* 
     fs.readFile('./index.html', (err, fileContents) => {
         if (err){
             res.statusCode = 500;
@@ -23,8 +24,26 @@ const server = http.createServer((req /* IncomingMessage */, res /* ServerRespon
         }
         res.write(fileContents);
         res.end();
-    });
+    }); 
+    */
 
+    //async (using streams)
+    /* 
+    const stream = fs.createReadStream('./index.html')
+    stream.on('data', chunk => res.write(chunk))
+    stream.on('end', () => res.end())
+    stream.on('error', () => {
+        res.statusCode = 404;
+        res.end();
+    }); 
+    */
+
+    const stream = fs.createReadStream('./index.html')
+    stream.pipe(res)
+    stream.on('error', () => {
+        res.statusCode = 404;
+        res.end();
+    }); 
 });
 
 server.listen(8080)
