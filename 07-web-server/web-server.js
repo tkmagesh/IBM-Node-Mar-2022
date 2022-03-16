@@ -38,6 +38,7 @@ const server = http.createServer((req /* IncomingMessage */, res /* ServerRespon
     }); 
     */
 
+    console.log(req.url)
     const stream = fs.createReadStream('./index.html')
     stream.pipe(res)
     stream.on('error', () => {

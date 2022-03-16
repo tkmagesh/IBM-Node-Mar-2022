@@ -112,3 +112,18 @@ AB tool (benchmarking tool)
     
     Download
     https://stackoverflow.com/questions/4314827/is-there-any-link-to-download-ab-apache-benchmark
+
+
+Modify the web-server.js to behave as follows
+    if the request is for /
+        send the contents of index.html
+    else
+        send the contents of the requested file
+    if the requested resource doesnot exist
+        send a 404 error
+    
+
+localhost:8080 => index.html
+localhost:8080/index.html => index.html
+localhost:8080/about.html => about.html
+localhost:8080/contact.html => 404
