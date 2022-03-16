@@ -13,7 +13,7 @@ const http = require('http'),
 const server = http.createServer((req, res) => {
     const urlObj = new url.URL(req.url, 'http://localhost:8080');
 
-    if (urlObj.pathname === '/calculator'){
+    if (urlObj.pathname === '/calculator' && req.method === "GET"){
         //extracting querystring values
         const querystringObj = {}
         for (let [key, value] of urlObj.searchParams){
@@ -30,6 +30,31 @@ const server = http.createServer((req, res) => {
         const result = calculator[op](n1, n2)
         res.write(result.toString());
         res.end();
+    } if (urlObj.pathname === '/calculator' && req.method === "POST"){
+        //extracting data from the request body & parse them
+        let rawData = '';
+        req.on('data', chunk => {
+            rawData += chunk;
+        });
+        req.on('end', ()=> {
+            var searchParms = new url.URLSearchParams(rawData)
+            const formDataObj = {}
+            for (let [key, value] of searchParms){
+                formDataObj[key] = value
+            };
+            const op = formDataObj.op,
+                n1 = parseInt(formDataObj.n1),
+                n2 = parseInt(formDataObj.n2);
+            if (!calculator.hasOwnProperty(op)){
+                res.statusCode = 400;
+                res.end()
+                return
+            }
+            const result = calculator[op](n1, n2)
+            res.write(result.toString());
+            res.end();
+        })
+        
     } else {
         res.statusCode = 404;
         res.end();
