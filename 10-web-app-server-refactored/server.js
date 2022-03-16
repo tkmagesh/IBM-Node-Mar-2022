@@ -1,24 +1,18 @@
 const http = require('http'),
+    path = require('path'),
     dataParser = require('./data-parser'),
-    serveStatic = require('./serve-static'),
+    serveStaticFactory = require('./serve-static'),
     serveCalculator = require('./serve-calculator'),
-    serve404 = require('./serve-404');
+    serve404 = require('./serve-404'),
+    app = require('./app')
 
-let middlewares = [ dataParser, serveStatic, serveCalculator, serve404 ];
-
-function exec(req, res, middlewares){
-    let first = middlewares[0],
-        remaining = middlewares.slice(1),
-        next = function(){
-            exec(req, res, remaining);
-        };
-    if (typeof first === 'function'){
-        first(req, res, next)
-    }
-}
+app.use(dataParser)
+app.use(serveStaticFactory(path.join(__dirname, 'public')))
+app.use(serveCalculator)
+app.use(serve404)
 
 const server = http.createServer((req, res) => {
-    exec(req, res, middlewares);
+    app(req, res)
 });
 
 server.listen(8080)

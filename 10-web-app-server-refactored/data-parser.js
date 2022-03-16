@@ -9,7 +9,19 @@ function dataParser(req, res, next){
     }
     req['urlObj'] = urlObj;
     req['query'] = querystringObj;
-    next();
+    let rawData = '';
+    req.on('data', chunk => {
+        rawData += chunk;
+    });
+    req.on('end', ()=> {
+        var searchParms = new url.URLSearchParams(rawData)
+        const formDataObj = {}
+        for (let [key, value] of searchParms){
+            formDataObj[key] = value
+        };
+        req['form'] = formDataObj;
+        next();
+    });
 }
 
 module.exports = dataParser;

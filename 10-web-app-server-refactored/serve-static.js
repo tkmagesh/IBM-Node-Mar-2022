@@ -8,25 +8,27 @@ function isStatic(resource){
     return staticResourceExtns.indexOf(extn) >= 0;
 }
 
-function serveStatic(req, res, next){
-    const resource = req.urlObj.pathname
-    if (isStatic(resource)){ 
-        const resourcePath = path.join(__dirname, resource);
-        if (!fs.existsSync(resourcePath)){
-            return next()
+function serveStaticFactory(staticResourcePath){
+    return function serveStatic(req, res, next){
+        const resource = req.urlObj.pathname
+        if (isStatic(resource)){ 
+            const resourcePath = path.join(staticResourcePath, resource);
+            if (!fs.existsSync(resourcePath)){
+                return next()
+            }
+            const stream = fs.createReadStream(resourcePath)
+            stream.pipe(res)
+            stream.on('end', () => {
+                next()
+            });
+            stream.on('error', () => {
+                res.statusCode = 500;
+                res.end();
+                next()
+            }); 
+        } else {
+            next()
         }
-        const stream = fs.createReadStream(resourcePath)
-        stream.pipe(res)
-        stream.on('end', () => {
-            next()
-        });
-        stream.on('error', () => {
-            res.statusCode = 500;
-            res.end();
-            next()
-        }); 
-    } else {
-        next()
     }
 }
-module.exports = serveStatic;
+module.exports = serveStaticFactory;
