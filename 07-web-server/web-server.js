@@ -7,6 +7,7 @@ const server = http.createServer((req, res) => {
     
     const urlObj = new url.URL(req.url, 'http://localhost:8080');
     const resource = urlObj.pathname === '/' ? '/index.html' : urlObj.pathname;
+    if (path.extname(resource) === )
     const resourcePath = path.join(__dirname, resource);
 
     //extracting querystring values
