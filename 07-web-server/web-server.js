@@ -1,48 +1,19 @@
 const http = require('http'),
-    fs = require('fs');
+    fs = require('fs'),
+    path = require('path');
 
-const server = http.createServer((req /* IncomingMessage */, res /* ServerResponse */) => {
-    /* 
-    res.write('<h1>Welcome to Node.js!<h1>')
-    res.end(); 
-    */
-
-    //using sync
-    
-    /* const fileContents = fs.readFileSync('./index.html');
-    res.write(fileContents);
-    res.end();  */
-   
-
-    //async (using callbacks)
-    /* 
-    fs.readFile('./index.html', (err, fileContents) => {
-        if (err){
-            res.statusCode = 500;
-            res.end();
-            return;
-        }
-        res.write(fileContents);
-        res.end();
-    }); 
-    */
-
-    //async (using streams)
-    /* 
-    const stream = fs.createReadStream('./index.html')
-    stream.on('data', chunk => res.write(chunk))
-    stream.on('end', () => res.end())
-    stream.on('error', () => {
+const server = http.createServer((req, res) => {
+    const resource = req.url === '/' ? '/index.html' : req.url;
+    const resourcePath = path.join(__dirname, resource);
+    if (!fs.existsSync(resourcePath)){
         res.statusCode = 404;
         res.end();
-    }); 
-    */
-
-    console.log(req.url)
-    const stream = fs.createReadStream('./index.html')
+        return
+    }
+    const stream = fs.createReadStream(resourcePath)
     stream.pipe(res)
     stream.on('error', () => {
-        res.statusCode = 404;
+        res.statusCode = 500;
         res.end();
     }); 
 });

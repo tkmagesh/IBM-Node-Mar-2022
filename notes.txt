@@ -119,6 +119,7 @@ Modify the web-server.js to behave as follows
         send the contents of index.html
     else
         send the contents of the requested file
+        
     if the requested resource doesnot exist
         send a 404 error
     

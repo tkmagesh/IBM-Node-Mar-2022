@@ -1,0 +1,35 @@
+ /* 
+    res.write('<h1>Welcome to Node.js!<h1>')
+    res.end(); 
+    */
+
+    //using sync
+    
+    /* const fileContents = fs.readFileSync('./index.html');
+    res.write(fileContents);
+    res.end();  */
+   
+
+    //async (using callbacks)
+    /* 
+    fs.readFile('./index.html', (err, fileContents) => {
+        if (err){
+            res.statusCode = 500;
+            res.end();
+            return;
+        }
+        res.write(fileContents);
+        res.end();
+    }); 
+    */
+
+    //async (using streams)
+    /* 
+    const stream = fs.createReadStream('./index.html')
+    stream.on('data', chunk => res.write(chunk))
+    stream.on('end', () => res.end())
+    stream.on('error', () => {
+        res.statusCode = 404;
+        res.end();
+    }); 
+    */
