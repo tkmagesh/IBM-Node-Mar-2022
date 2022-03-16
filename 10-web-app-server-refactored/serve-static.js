@@ -18,7 +18,15 @@ function serveStatic(req, res){
             return
         }
         const stream = fs.createReadStream(resourcePath)
-        stream.pipe(res)
+        //stream.pipe(res)
+        stream.on('data', chunk => {
+            console.log('[@serveStatic] - serving chunk')
+            res.write(chunk)
+        });
+        stream.on('end', () => {
+            console.log('[@serveStatic] - ending response')
+            res.end();
+        });
         stream.on('error', () => {
             res.statusCode = 500;
             res.end();
