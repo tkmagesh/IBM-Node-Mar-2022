@@ -8,29 +8,25 @@ function isStatic(resource){
     return staticResourceExtns.indexOf(extn) >= 0;
 }
 
-function serveStatic(req, res){
+function serveStatic(req, res, next){
     const resource = req.urlObj.pathname
     if (isStatic(resource)){ 
         const resourcePath = path.join(__dirname, resource);
         if (!fs.existsSync(resourcePath)){
-            res.statusCode = 404;
-            res.end();
-            return
+            return next()
         }
         const stream = fs.createReadStream(resourcePath)
-        //stream.pipe(res)
-        stream.on('data', chunk => {
-            console.log('[@serveStatic] - serving chunk')
-            res.write(chunk)
-        });
+        stream.pipe(res)
         stream.on('end', () => {
-            console.log('[@serveStatic] - ending response')
-            res.end();
+            next()
         });
         stream.on('error', () => {
             res.statusCode = 500;
             res.end();
+            next()
         }); 
+    } else {
+        next()
     }
 }
 module.exports = serveStatic;

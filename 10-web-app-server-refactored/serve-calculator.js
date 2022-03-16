@@ -1,7 +1,7 @@
 const url = require('url'),
     calculator = require('./calculator');
 
-function serveCalculator(req, res){
+function serveCalculator(req, res, next){
     const resource = req.urlObj.pathname;
     if (resource === '/calculator' && req.method === "GET"){
         const op = req.query.op,
@@ -10,11 +10,12 @@ function serveCalculator(req, res){
         if (!calculator.hasOwnProperty(op)){
             res.statusCode = 400;
             res.end()
-            return
+            return next()
         }
         const result = calculator[op](n1, n2)
         res.write(result.toString());
         res.end();
+        return next()
     } else if (resource === '/calculator' && req.method === "POST"){
         //extracting data from the request body & parse them
         let rawData = '';
@@ -33,12 +34,15 @@ function serveCalculator(req, res){
             if (!calculator.hasOwnProperty(op)){
                 res.statusCode = 400;
                 res.end()
-                return
+                return next()
             }
             const result = calculator[op](n1, n2)
             res.write(result.toString());
             res.end();
+            return next()
         })
+    } else {
+        next()
     }
 }
 

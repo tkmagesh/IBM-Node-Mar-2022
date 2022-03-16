@@ -1,6 +1,6 @@
 const url = require('url');
 
-function dataParser(req, res){
+function dataParser(req, res, next){
     const urlObj = new url.URL(req.url, 'http://localhost:8080');
     urlObj.pathname = urlObj.pathname === '/' ? '/index.html' : urlObj.pathname;
     const querystringObj = {}
@@ -9,6 +9,7 @@ function dataParser(req, res){
     }
     req['urlObj'] = urlObj;
     req['query'] = querystringObj;
+    next();
 }
 
 module.exports = dataParser;
