@@ -2,51 +2,54 @@ const dbUtils = require('../utils/dbUtils');
 
 /* Refactor the tasks manipulation logic from routes/tasks to here */
 
-function getAll(){
-    return dbUtils.getData()
-}
-
-async function getById(id){
-    const taskList = await dbUtils.getData();
-    const task = taskList.find(task => task.id === id)
-    if (!task){
-        throw new Error('Task not found')
-    }
-    return task
-}
-
-async function addNew(taskData){
+function getAll(callback){
     //read the data from file
-    const taskList = await dbUtils.getData();
+    dbUtils.getData((err, taskList) => {
+        callback(err, taskList);
+    });
+    
+}
+
+function getById(id, callback){
+    dbUtils.getData((err, taskList) => {
+        if (err) {
+            return callback(err, null)
+        }
+        const task = taskList.find(task => task.id === id)
+        if (!task){
+            return callback(new Error('Task not found'), null)
+        }
+        return callback(null, task);    
+    });
+    
+}
+
+function addNew(taskData){
+    //read the data from file
     const newTask = { ...taskData };
     newTask.id = taskList.reduce((maxTaskId, task) => task.id > maxTaskId ? task.id : maxTaskId, 0) + 1;
     taskList.push(newTask);
     //save data data in to the file
-    await dbUtils.saveData(taskList)
     return newTask
 }
 
-async function update(taskToUpdate){
+function update(taskToUpdate){
     //read the data from file
-    let taskList = await dbUtils.getData()
     if (!taskList.find(task => task.id === taskToUpdate.id)){
         throw new Error('Task not found')
     }
     taskList = taskList.map(task => task.id === taskToUpdate.id ? taskToUpdate : task);
     //save the data into the file
-    await dbUtils.saveData(taskList)
     return taskToUpdate
 }
 
-async function remove(id){
+function remove(id){
     //read the data from file
-    let taskList = await dbUtils.getData()
     const task = taskList.find(task => task.id === id)
     if (!task){
         throw new Error('Task not found')
     }
     taskList = taskList.filter(task => task.id !== id)
-    dbUtils.saveData(taskList)
     //save the data into the file
 }
 
