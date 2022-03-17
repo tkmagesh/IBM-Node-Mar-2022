@@ -128,3 +128,13 @@ localhost:8080 => index.html
 localhost:8080/index.html => index.html
 localhost:8080/about.html => about.html
 localhost:8080/contact.html => 404
+
+package.json
+    name
+    version
+    author
+    repository
+    private
+    dependencies
+    devDependencies
+    scripts
