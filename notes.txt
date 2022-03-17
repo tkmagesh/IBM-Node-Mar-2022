@@ -138,3 +138,11 @@ package.json
     dependencies
     devDependencies
     scripts
+
+npm (package manager)
+    to create a package.json file
+        npm init
+
+    to install a package
+        npm install <package-name>
+        npm install chalk@4.1.2

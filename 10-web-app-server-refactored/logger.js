@@ -1,10 +1,12 @@
+const chalk = require('chalk');
+
 function logger(req, res, next){
-    let logMessage = `${req.method} - ${req.url}`
+    let logMessage = `${chalk.red(req.method)} - ${chalk.green(req.url)}`
     const startTime = new Date()
     res.on('finish', () => {
         const endTime = new Date(),
             elapsed = endTime - startTime;
-        console.log(`${logMessage} - ${res.statusCode} - ${elapsed}`)
+        console.log(`${logMessage} - ${chalk.yellow(res.statusCode)} - ${elapsed}`)
     })
     next()
 }
