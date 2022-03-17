@@ -146,3 +146,13 @@ npm (package manager)
     to install a package
         npm install <package-name>
         npm install chalk@4.1.2
+
+    to uninstall a package
+        npm uninstall <package-name>
+
+    to install package as a development dependency
+        npm install <package-name> --save-dev
+        npm install <package-name> -D
+
+    to start the application
+        npm start

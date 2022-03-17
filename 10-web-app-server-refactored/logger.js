@@ -6,7 +6,7 @@ function logger(req, res, next){
     res.on('finish', () => {
         const endTime = new Date(),
             elapsed = endTime - startTime;
-        console.log(`${logMessage} - ${chalk.yellow(res.statusCode)} - ${elapsed}`)
+        console.log(`${logMessage} - ${chalk.underline.bgBlue(res.statusCode)} - ${elapsed}`)
     })
     next()
 }

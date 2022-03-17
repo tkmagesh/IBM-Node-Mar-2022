@@ -1,0 +1,7 @@
+
+> web-app-server@0.1.0 start
+> node server.js
+
+server listening on 8080
+GET - /calculator-get.html - 200 - 9
+GET - /calculator?n1=100&op=multiply&n2=200 - 200 - 1
