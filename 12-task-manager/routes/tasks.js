@@ -2,41 +2,46 @@ const express = require('express'),
     router = express.Router(),
     taskService = require('../services/tasks-service');
 
-router.get('/', (req, res, next) => {
-    const taskList = taskService.getAll()
-    res.json(taskList);
+router.get('/', async (req, res, next) => {
+    const taskList = await taskService.getAll()
+    console.log(taskList);
+    res.json(taskList)
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const id = parseInt(req.params.id);
-        const task = taskService.getById(id)
-        res.json(task);
-    } catch(err){
-        next(err)
+        const task = await taskService.getById(id)
+        res.json(task)
+    } catch (err) {
+        return next(err)
     }
 });
 
-router.post('/', (req, res, next) => {
-    const newTaskData = req.body;
-    const newTask = taskService.addNew(newTaskData)
-    res.status(201).json(newTask);
+router.post('/', async (req, res, next) => {
+    try {
+        const newTaskData = req.body;
+        const newTask = await taskService.addNew(newTaskData)
+        res.status(201).json(newTask);
+    } catch (err) {
+        return next(err)
+    }
 });
 
-router.put('/:id', (req, res, next) => {
-    const updatedTaskData = req.body;
+router.put('/:id', async (req, res, next) => {
     try {
-        const updatedTask = taskService.update(updatedTaskData);
+        const updatedTaskData = req.body;
+        const updatedTask = await taskService.update(updatedTaskData);
         res.json(updatedTask)
     } catch (err) {
         next(err);
     }
 });
 
-router.delete('/:id', (req, res, next) => {
-    const taskIdToDelete = parseInt(req.params.id);
+router.delete('/:id', async (req, res, next) => {
     try {
-        taskService.remove(taskIdToDelete)
+        const taskIdToDelete = parseInt(req.params.id);
+        await taskService.remove(taskIdToDelete)
         res.json({})
     } catch (err) {
         next(err);
