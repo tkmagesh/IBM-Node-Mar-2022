@@ -165,4 +165,34 @@ npm (package manager)
 For a curated list of 3rd party packages
     https://github.com/sindresorhus/awesome-nodejs
 
+to install package as a global command line tool
+    npm install -g <package-name>
+
+To expose a REST API
+    define a route
+    configure the route handlers
+        serve the data 
+
+
+Assignment:
+    Expose a '/tasks' REST API
     
+const taskList = [
+    {id : 1, name : 'Master JavaScript', completed : false},
+    {id : 2, name : 'Explore Node.js', completed : true},
+    {id : 3, name : 'Study async JavaScript', completed : false},
+];
+
+
+API - tasks
+    GET /tasks
+    GET /tasks/:id
+        GET /tasks/101
+            req.params.id
+
+    POST /tasks
+        req.body
+
+    PUT /tasks/:id
+
+    DELETE /tasks/:id
