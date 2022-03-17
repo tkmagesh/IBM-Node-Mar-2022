@@ -156,3 +156,13 @@ npm (package manager)
 
     to start the application
         npm start
+
+    to execute the custom scripts configured in package.json file
+        npm run <script-name>
+        OR
+        npm run-script <script-name>
+
+For a curated list of 3rd party packages
+    https://github.com/sindresorhus/awesome-nodejs
+
+    
