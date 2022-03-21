@@ -208,3 +208,8 @@ OWASP
 CORS
     https://www.npmjs.com/package/cors
 
+Data Sanitization
+    https://www.npmjs.com/package/express-sanitizer
+
+Data Validation
+    https://express-validator.github.io/docs/
