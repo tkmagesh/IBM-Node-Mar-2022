@@ -11,6 +11,7 @@ let tasksCollections;
     const db = client.db('training')
     tasksCollections = db.collection('tasks')
 
+    console.log(db);
     //get the tasks 
     await printTasks();
 
@@ -19,7 +20,7 @@ let tasksCollections;
     //await printTasks()
     
 
-    await client.close()
+    await db.s.client.close()
 })();
 
 async function printTasks(){
