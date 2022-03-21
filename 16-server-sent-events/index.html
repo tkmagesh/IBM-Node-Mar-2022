@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Sent Events</title>
+    <script>
+        (() => {
+            let eventSrc;
+
+            function onServerMessage(evt){
+                document.getElementById('divMessages').innerHTML += evt.data + '<br/>'
+            }
+
+            function onBtnSubscribeClick(){
+                eventSrc = new EventSource('/stream');
+                eventSrc.addEventListener('message', onServerMessage)
+            }
+
+            function onBtnUnSubscribeClick(){
+                eventSrc.removeEventListener('message', onServerMessage);
+                eventSrc.close()
+            }
+
+            function onDocumentLoad() {
+                const btnSubscribe = document.getElementById('btnSubscribe');
+                btnSubscribe.addEventListener('click', onBtnSubscribeClick);
+
+                var btnUnSubscribe = document.getElementById('btnUnSubscribe');
+                btnUnSubscribe.addEventListener('click', onBtnUnSubscribeClick)
+            }
+            window.addEventListener('DOMContentLoaded', onDocumentLoad)
+        })()
+    </script>
+</head>
+<body>
+    <button id="btnSubscribe">Subscribe</button>
+    <button id="btnUnSubscribe">Unsubscribe</button>
+    <div id="divMessages">
+
+    </div>
+</body>
+</html>

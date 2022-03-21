@@ -213,3 +213,20 @@ Data Sanitization
 
 Data Validation
     https://express-validator.github.io/docs/
+
+Using HTTPS
+    https://nodejs.org/en/knowledge/HTTP/servers/how-to-create-a-HTTPS-server/
+
+Image to base64
+    https://stackoverflow.com/questions/24523532/how-do-i-convert-an-image-to-a-base64-encoded-data-url-in-sails-js-or-generally    
+
+
+Server Sent Events
+    content-type : text/event-stream
+    connection : keep-alive
+
+    event:<event-name>\n
+    data:<data>\n\n
+
+    Browser:
+        EventSource
