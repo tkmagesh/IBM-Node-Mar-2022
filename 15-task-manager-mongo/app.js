@@ -7,14 +7,14 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var tasksRouter = require('./routes/tasks');
-const { connect } = require('./utils/dbUtils');
+const dbConnection = require('./utils/dbUtils');
 
 var app = express();
 
 
 module.exports = async function (){
   //wait for the db connection to be established
-  await connect();
+  await dbConnection.connect();
 
   // view engine setup
   app.set('views', path.join(__dirname, 'views'));

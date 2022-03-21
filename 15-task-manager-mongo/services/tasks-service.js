@@ -1,16 +1,12 @@
-const {db} = require('../utils/dbUtils');
-
-/* Refactor the tasks manipulation logic from routes/tasks to here */
-
-
+const dbConn = require('../utils/dbUtils');
+const ObjectId = require('mongodb').ObjectId;
 
 function getAll(){
-    return db.collection('tasks').find({}).toArray()
+    return dbConn.db.collection('tasks').find({}).toArray()
 }
 
 async function getById(id){
-    const taskList = await dbUtils.getData();
-    const task = taskList.find(task => task.id === id)
+    const task = dbConn.db.collection('tasks').find({"_id" : new ObjectId(id)}).toArray()
     if (!task){
         throw new Error('Task not found')
     }
@@ -18,38 +14,22 @@ async function getById(id){
 }
 
 async function addNew(taskData){
-    //read the data from file
-    const taskList = await dbUtils.getData();
-    const newTask = { ...taskData };
-    newTask.id = taskList.reduce((maxTaskId, task) => task.id > maxTaskId ? task.id : maxTaskId, 0) + 1;
-    taskList.push(newTask);
-    //save data data in to the file
-    await dbUtils.saveData(taskList)
+    const addNewRes = await dbConn.db.collection('tasks').insertOne(taskData)
+    const newTask = await dbConn.db.collection('tasks').find({"_id" : addNewRes.insertedId}).toArray()
     return newTask
 }
 
-async function update(taskToUpdate){
-    //read the data from file
-    let taskList = await dbUtils.getData()
-    if (!taskList.find(task => task.id === taskToUpdate.id)){
-        throw new Error('Task not found')
-    }
-    taskList = taskList.map(task => task.id === taskToUpdate.id ? taskToUpdate : task);
-    //save the data into the file
-    await dbUtils.saveData(taskList)
-    return taskToUpdate
+async function update(id, taskToUpdate){
+    const query = {"_id" : new ObjectId(id)}
+    const res = await dbConn.db.collection('tasks').updateOne(query, { $set : taskToUpdate})
+    const updatedTask = await dbConn.db.collection('tasks').find({"_id" : new ObjectId(id)}).toArray()[0]
+    return updatedTask
 }
 
 async function remove(id){
-    //read the data from file
-    let taskList = await dbUtils.getData()
-    const task = taskList.find(task => task.id === id)
-    if (!task){
-        throw new Error('Task not found')
-    }
-    taskList = taskList.filter(task => task.id !== id)
-    dbUtils.saveData(taskList)
-    //save the data into the file
+    const query = {"_id" : new ObjectId(id)}
+    const res = await dbConn.db.collection('tasks').deleteOne(query)
+    console.log(res);
 }
 
 module.exports = { getAll, getById, addNew, update, remove }

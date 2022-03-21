@@ -1,13 +1,17 @@
 const { MongoClient } = require('mongodb')
-let client, db;
 
-async function connect(){
-    const url = 'mongodb://localhost:27017'
-    client = new MongoClient(url)
-    await client.connect()
-    db = client.db('training')
+class DBConnection {
+    client = null;
+    db = null;
+
+    async connect(){
+        const url = 'mongodb://localhost:27017'
+        this.client = new MongoClient(url)
+        await this.client.connect()
+        this.db = this.client.db('training')
+    }
 }
 
-module.exports = { connect, client, db }
+module.exports = new DBConnection()
 
 
