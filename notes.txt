@@ -196,3 +196,15 @@ API - tasks
     PUT /tasks/:id
 
     DELETE /tasks/:id
+
+
+
+Preventing SQL Injection
+    https://blog.sqreen.com/preventing-sql-injection-in-node-js-and-other-vulnerabilities/
+
+OWASP
+    https://www.npmjs.com/package/helmet
+
+CORS
+    https://www.npmjs.com/package/cors
+
