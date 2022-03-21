@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var tasksRouter = require('./routes/tasks');
 const dbConnection = require('./utils/dbUtils');
+const { checkToken, generateToken } = require('./middlewares/auth');
 
 var app = express();
 
@@ -29,13 +30,25 @@ module.exports = async function (){
   app.use(cookieParser());
   app.use(express.static(path.join(__dirname, 'public')));
 
-  app.use('/', indexRouter);
-  app.use('/users', usersRouter);
+  //check whether the user is logged in or not
+
+  app.post('/login', generateToken)
+  app.use(checkToken)   //extracts the userinfo from the token and adds it to req.decoded
+  
+  app.use('/users', (req, res, next )=>{
+    //authorization logic goes here
+    const userName = req.decoded.username;
+    if (userName === 'admin'){
+      res.send(403).json({
+          success: false,
+          message: 'Not authorized'
+        });
+    } else {
+      next();
+    }
+  }, usersRouter);
+
   app.use('/tasks', tasksRouter);
-
-  
-  
-
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
     next(createError(404));
